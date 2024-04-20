@@ -1,3 +1,6 @@
+mirror <- "cran-r.c3sl.ufpr.br"
+options(repos = mirror)
+
 # Instale o pacote mlbench se ainda não o tiver instalado
 install.packages("mlbench")
 
@@ -10,7 +13,7 @@ data(Satellite)
 # Visualize a estrutura da base de dados
 str(Satellite)
 
-# 2. Crie par2ções contendo 80% para treino e 20% para teste
+# 2. Crie 2 partições contendo 80% para treino e 20% para teste
 # Instale os pacotes necessários se ainda não os tiver instalado
 install.packages("caret")
 
@@ -44,7 +47,7 @@ modelo_rf <- randomForest(classes ~ ., data = dados_treino)
 # 3.2 Treinamento do modelo SVM
 modelo_svm <- svm(classes ~ ., data = dados_treino)
 
-# 3. Treinamento do modelo RNA
+# 3.3 Treinamento do modelo RNA
 modelo_rna <- neuralnet(classes ~ ., data = dados_treino, hidden = c(5, 2), linear.output = FALSE)
 
 # Exiba os modelos treinados
@@ -60,13 +63,13 @@ library(caret)
 calcular_metricas <- function(matriz_confusao) {
   # Precisão (precision)
   precisao <- diag(matriz_confusao) / colSums(matriz_confusao)
-  
+
   # Recall
   recall <- diag(matriz_confusao) / rowSums(matriz_confusao)
-  
+
   # F1-score
   f1_score <- 2 * (precisao * recall) / (precisao + recall)
-  
+
   # Retornar as métricas
   return(data.frame(precisao = precisao, recall = recall, f1_score = f1_score))
 }
