@@ -459,21 +459,3 @@ with(dplyr::sample_n(edades, 5000), shapiro.test(edad[group == "Man"]))
 
 
 
-
-# Queremos saber se o peso mediano das mulheres difere do peso
-# mediano dos homens.
-
-# Vamos primeiro calcular um sumario estatistico
-group_by(weight, group) %>%
-  summarise(
-    count = n(),
-    median = median(weight, na.rm = TRUE),
-    IQR = IQR(weight, na.rm = TRUE)
-  )
-
-
-# Vamos visualizar os dados usando box-plots
-# Plotaremos o "weight" por groupo
-ggboxplot(weight, x = "group", y = "weight", 
-          color = "group", palette=c("#00AFBB", "#E7B800"),
-          ylab = "Weight", xlab = "Groups")
